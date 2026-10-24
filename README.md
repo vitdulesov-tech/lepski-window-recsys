@@ -267,7 +267,6 @@ python -m src.train_eval                 # -> results/summary.md, metrics.json, 
 ```
 configs/base.toml          параметры эксперимента
 docs/lepski_window.pdf     постановка, теория с доказательствами, протокол
-docs/hawkes_idea.pdf       мой первый вариант идеи (экспоненциальные ядра), оставил для истории
 src/data.py, eda.py, rows.py, leakage.py     фаза 0 (polars)
 src/diag_timestamp.py                        диагностика семантики timestamp
 src/features/counters.py   PITCounter — point-in-time счётчики на searchsorted
