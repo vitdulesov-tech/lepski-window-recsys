@@ -1,0 +1,70 @@
+# Все параметры эксперимента в одном месте. Менять только здесь.
+
+[general]
+seed = 20261018
+raw_dir = "data/raw"
+processed_dir = "data/processed"
+
+[data]
+hf_repo = "yandex/yambda"
+# Срез 50m: 10 000 пользователей, ~48 млн событий всех типов.
+events_file = "flat/50m/multi_event.parquet"
+artist_file = "artist_item_mapping.parquet"
+album_file = "album_item_mapping.parquet"
+# Сколько пользователей оставить (все их события). 5000 ~ 2 ГБ в памяти.
+n_users = 5000
+# timestamp в Yambda — секунды, округлённые до кратных 5 (проверено: 10 месяцев данных = ~300 дней).
+ts_unit_seconds = 1
+
+[task]
+# Строка обучающей выборки = прослушивание из рекомендательной ленты.
+row_event_type = "listen"
+row_is_organic = 0
+# Метка: дослушал ли (Listen+ по определению авторов датасета).
+label_played_ratio_threshold = 50
+
+[split]
+# Границы задаются длительностями от конца данных, в днях.
+# Календарные даты в Yambda не раскрыты, поэтому считаем от последнего дня.
+test_days = 7
+gap_days = 1
+val_days = 14
+# Тренировочный период — всё, что раньше (минус зазор перед валидацией).
+# Если хочется ограничить длину train — поставить число дней, иначе 0 = без ограничения.
+train_max_days = 0
+
+[leakage]
+# Сколько случайных строк проверяется brute-force при тесте на утечки.
+n_check_rows = 100
+
+[features]
+# Доля train-строк, для которых считаются признаки (val и test — полностью). 0.2 ≈ 2 млн строк.
+train_row_fraction = 0.2
+# Ручные окна (дни); окно "вся история" добавляется автоматически.
+manual_windows_days = [1, 7, 30]
+# Сетка для M0_all и Лепского (дни); окно "вся история" добавляется автоматически.
+grid_windows_days = [1, 2, 4, 8, 16, 32, 64, 128]
+# Порог z = fraction * z_th, z_th = 2 log(4 J / delta), J = число окон сетки включая "вся история".
+delta = 0.05
+z_fractions = [1.0, 0.5, 0.25, 0.125]
+
+[model]
+# Одни и те же гиперпараметры для всех моделей (подбор — только early stopping на валидации).
+num_leaves = 63
+learning_rate = 0.05
+min_data_in_leaf = 200
+feature_fraction = 0.8
+bagging_fraction = 0.8
+bagging_freq = 1
+lambda_l2 = 5.0
+num_boost_round = 3000
+early_stopping_rounds = 100
+num_threads = 8
+# Если true — на M0 перебираются num_leaves ∈ {31, 63, 127} × learning_rate ∈ {0.03, 0.1},
+# лучшие по LogLoss на валидации фиксируются для всех моделей (ещё 6 обучений).
+tune_on_m0 = false
+
+[eval]
+n_boot = 500
+# Порог не-уступания для H1 (ΔAUC), фиксируется до эксперимента.
+noninferiority_margin = 0.002

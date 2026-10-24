@@ -1,0 +1,88 @@
+{
+  "metrics": {
+    "M0": {
+      "auc": 0.8715566430591433,
+      "logloss": 0.4025022307461247,
+      "n_features": 37,
+      "best_iteration": 699,
+      "val_logloss": 0.39938521154770146
+    },
+    "M0_all": {
+      "auc": 0.8719584617887347,
+      "logloss": 0.4019348627995481,
+      "n_features": 67,
+      "best_iteration": 535,
+      "val_logloss": 0.39936842825518837
+    },
+    "M3plus": {
+      "auc": 0.8716530742896912,
+      "logloss": 0.40235074342851307,
+      "n_features": 31,
+      "best_iteration": 482,
+      "val_logloss": 0.40007961848522955
+    },
+    "M3plus1d": {
+      "auc": 0.8715801550647315,
+      "logloss": 0.4024828174421932,
+      "n_features": 37,
+      "best_iteration": 530,
+      "val_logloss": 0.39999837532032634
+    }
+  },
+  "delta_auc_ci": {
+    "M3plus-M0": {
+      "mean": 0.00010431903621333572,
+      "lo": -0.000279288433858646,
+      "hi": 0.0004730548035100201
+    },
+    "M0_all-M0": {
+      "mean": 0.0004024052289477049,
+      "lo": 0.00010507979416227166,
+      "hi": 0.0007510575445040994
+    },
+    "M0_all-M3plus": {
+      "mean": 0.0002980861927343692,
+      "lo": -2.907897411622007e-05,
+      "hi": 0.0006385427354664378
+    },
+    "M3plus1d-M0": {
+      "mean": 2.9191580573407094e-05,
+      "lo": -0.00030897219996567636,
+      "hi": 0.0003729783464194778
+    },
+    "M3plus1d-M0_all": {
+      "mean": -0.00037321364837429783,
+      "lo": -0.0006587856306971118,
+      "hi": -8.387325968860501e-05
+    }
+  },
+  "z_selected": {
+    "name": "z012",
+    "value": 1.6448128030025253
+  },
+  "val_logloss_by_z": {
+    "M3plus@z100": 0.40079635269865066,
+    "M3plus@z050": 0.4007637799534692,
+    "M3plus@z025": 0.400117785939931,
+    "M3plus@z012": 0.40007961848522955
+  },
+  "H1_noninferior": true,
+  "H2_superior": false,
+  "margin": 0.002,
+  "n_test_rows": 348903,
+  "n_test_users": 3059,
+  "params": {
+    "objective": "binary",
+    "metric": "binary_logloss",
+    "verbosity": -1,
+    "seed": 0,
+    "num_leaves": 63,
+    "learning_rate": 0.05,
+    "min_data_in_leaf": 200,
+    "feature_fraction": 0.8,
+    "bagging_fraction": 0.8,
+    "bagging_freq": 1,
+    "lambda_l2": 5.0,
+    "num_threads": 8
+  }
+}
